@@ -208,6 +208,7 @@ public class GetSootArgs {
 		String[] sootArgs = {
 				"-whole-program",
 				"-app",
+				//"-p", "jb", "use-original-names:true",
 				"-allow-phantom-refs",
 				"-keep-bytecode-offset",
 				"-p","cg.spark","on",

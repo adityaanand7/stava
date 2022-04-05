@@ -230,6 +230,7 @@ public class Main {
 			output.append(ptg.toString());
 			output.append("\nSummary\n");
 			output.append(summaries.get(method).toString() + "\n");
+			output.append("**************************************** \n");
 			try {
 				Files.write(p_opFile, output.toString().getBytes(StandardCharsets.UTF_8),
 						Files.exists(p_opFile) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE);
