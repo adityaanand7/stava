@@ -208,6 +208,7 @@ public class GetSootArgs {
 		String[] sootArgs = {
 				"-whole-program",
 				"-app",
+				"-f", "J",
 				//"-p", "jb", "use-original-names:true",
 				"-allow-phantom-refs",
 				"-keep-bytecode-offset",
@@ -230,7 +231,7 @@ public class GetSootArgs {
 		for(String s: sootArgs) {
 			System.out.print(s+" ");
 		}
-		System.out.println("");
+		System.out.println("Hello");
 		return sootArgs;
 	}
 
