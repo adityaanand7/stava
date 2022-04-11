@@ -222,16 +222,18 @@ public class GetSootArgs {
 				"-output-dir", args[4],
 				"-output-format", "jimple",
 				"-x", "jdk.*",
-				// "-i", "java.*",
-				// "-i", "org.*",
-				// "-i", "com.*",
-				// "-i", "sun.*",
+				//"-x", "java.*",
+				"-x", "org.*",
+				"-x", "com.*",
+				"-x", "sun.*",
+				"-x", "javax.*",
 				// "-include", "java.util.HashMap"
 		};
+		System.out.println("Soot Arguments are : ");
 		for(String s: sootArgs) {
 			System.out.print(s+" ");
 		}
-		System.out.println("Hello");
+		//System.out.println("Hello");
 		return sootArgs;
 	}
 

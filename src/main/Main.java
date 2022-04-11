@@ -5,6 +5,7 @@ import config.StoreEscape;
 import es.*;
 import ptg.ObjectNode;
 import ptg.PointsToGraph;
+import resolver.ContextualResolver;
 import resolver.SummaryResolver;
 import resolver.ReworkedResolver;
 import soot.PackManager;
@@ -58,6 +59,7 @@ public class Main {
 			System.out.println("Unable to generate args for soot!");
 			return;
 		}
+		System.out.println("\n 1. Static Analysis starts: ");
 		StaticAnalyser staticAnalyser = new StaticAnalyser();
 		CHATransform prepass = new CHATransform();
 		PackManager.v().getPack("wjap").add(new Transform("wjap.pre", prepass));
@@ -112,8 +114,9 @@ public class Main {
 		long analysis_end = System.currentTimeMillis();
 		System.out.println("Static Analysis is done!");
 		System.out.println("Time Taken:"+(analysis_end-analysis_start)/1000F);
+		System.out.println("**********************************************************");
 
-		
+		boolean contextualResolver = true;
 		boolean useNewResolver = true;
 		long res_start = System.currentTimeMillis();
 		// printSummary(staticAnalyser.summaries);
@@ -122,8 +125,28 @@ public class Main {
 		// if (true)
 		// 	return;
 		// printCFG();
+		System.out.println("2. Resolution Starts");
+		if(contextualResolver) {
+			ContextualResolver cr = new ContextualResolver(staticAnalyser.summaries,
+					staticAnalyser.ptgs,
+					staticAnalyser.noBCIMethods);
+			long res_end = System.currentTimeMillis();
+			System.out.println("Resolution is done");
+			System.out.println("Time Taken in phase 1:"+(analysis_end-analysis_start)/1000F);
+			System.out.println("Time Taken in phase 2:"+(res_end-res_start)/1000F);
 
-		if(useNewResolver) {
+			// System.out.println(staticAnalyser.summaries.size()+ " "+staticAnalyser.ptgs.size());
+
+
+			HashMap<SootMethod, HashMap<ObjectNode, EscapeStatus>> resolved = (HashMap) kill(cr.solvedSummaries);
+
+			printAllInfo(StaticAnalyser.ptgs, resolved, args[4]);
+
+			saveStats(cr.existingSummaries, resolved, args[4], staticAnalyser.ptgs);
+
+			printResForJVM(cr.solvedSummaries, args[2], args[4]);
+		}
+		else if(!contextualResolver && useNewResolver) {
 			ReworkedResolver sr = new ReworkedResolver(staticAnalyser.summaries,
 											staticAnalyser.ptgs,
 											staticAnalyser.noBCIMethods);

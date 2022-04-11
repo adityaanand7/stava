@@ -56,8 +56,8 @@ public class InvokeStmt {
 			edges.add(iedges.next());
 		}
 		if (edges.size() == 0) {
-			System.out.println("Empty edges: "+expr+", function incoming edges: "+cg.edgesInto(m).hasNext()+
-								" Method: "+m.getBytecodeSignature());
+			//System.out.println("Empty edges: "+expr+", function incoming edges: "+cg.edgesInto(m).hasNext()+
+			//					" Method: "+m.getBytecodeSignature());
 			edges.add(new Edge(m, u, expr.getMethod(), Kind.SPECIAL));	
 		}
 

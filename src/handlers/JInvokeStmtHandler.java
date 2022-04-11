@@ -148,8 +148,8 @@ public class JInvokeStmtHandler {
 		// if (expr instanceof JSpecialInvokeExpr) {
 		if (edges.size() == 0) {
 			// edges = new ArrayList<>();
-			System.out.println("Empty edges: "+expr+", function incoming edges: "+cg.edgesInto(m).hasNext()+
-								" Method: "+m.getBytecodeSignature());
+			//System.out.println("Empty edges: "+expr+", function incoming edges: "+cg.edgesInto(m).hasNext()+
+								//" Method: "+m.getBytecodeSignature());
 			edges.add(new Edge(m, u, expr.getMethod(), Kind.SPECIAL));	
 		}
 		
@@ -179,7 +179,7 @@ public class JInvokeStmtHandler {
 			boolean isNative = method.isNative();
 			boolean iswhiteListed = !blacklistedNatives.contains(method.getBytecodeSignature());
 			if (isNative) {
-				System.out.println("Native Method: "+method.getBytecodeSignature()+" WhiteList: "+iswhiteListed);
+				//System.out.println("Native Method: "+method.getBytecodeSignature()+" WhiteList: "+iswhiteListed);
 			}
 			int paramCount = method.getParameterCount();
 

@@ -93,7 +93,7 @@ public class StaticAnalyser extends BodyTransformer {
 		// if ( !this.sArrays.contains(body.getMethod().getBytecodeSignature()))
 		// 	return;
 
-		System.out.println("Method Name: "+ body.getMethod().getBytecodeSignature() + ":"+body.getMethod().getName());
+		//System.out.println("Method Name: "+ body.getMethod().getBytecodeSignature() + ":"+body.getMethod().getName());
 //		if(body.getMethod().getName().contains("<clinit>")){
 //			System.out.println("Skipping this method");
 //			return;
@@ -296,7 +296,7 @@ public class StaticAnalyser extends BodyTransformer {
 			markAsEscaping(JInvokeStmtHandler.nativeLocals.get(body.getMethod()), summary, ptg);
 		}
 		summaries.put(body.getMethod(), summary);
-		System.out.println("Method Name: "+ body.getMethod().getBytecodeSignature() + ":"+body.getMethod().getName());
+		//System.out.println("Method Name: "+ body.getMethod().getBytecodeSignature() + ":"+body.getMethod().getName());
 	}
 
 	private void markAsEscaping(List<Local> nativeList, Map<ObjectNode, EscapeStatus> summary, PointsToGraph ptg) {

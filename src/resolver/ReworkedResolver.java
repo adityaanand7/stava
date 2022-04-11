@@ -68,12 +68,12 @@ public class ReworkedResolver{
         this.ptgs = ptgs;
         this.noBCIMethods = escapingMethods;
 
-        System.out.println(this.existingSummaries);
+        //System.out.println(this.existingSummaries);
 
-        for (SootMethod method: this.ptgs.keySet())
-        {
-            System.out.println(method+": "+this.ptgs.get(method));
-        }
+        // for (SootMethod method: this.ptgs.keySet())
+        // {
+        //     System.out.println(method+": "+this.ptgs.get(method));
+        // }
     
         this.objMap = new HashMap<> ();
         this.solvedSummaries = new HashMap<> ();
@@ -220,7 +220,7 @@ public class ReworkedResolver{
 
             }
         }
-        System.out.println(this.solvedSummaries);
+        //System.out.println(this.solvedSummaries);
     }
 
     EscapeState CreateNewEscapeState(ObjectNode obj, ConditionalValue state, SootMethod src) {
@@ -385,7 +385,7 @@ public class ReworkedResolver{
                 this.revgraph.get(val).add(key);
             }
         }
-        printGraph(this.graph);
+        //printGraph(this.graph);
         // printGraph(this.revgraph);
     }
 
@@ -648,12 +648,12 @@ public class ReworkedResolver{
                 //     if (ofSameMethod(obj, sobj))
                 //         markObjectAsEscaping(obj);
                 // }
-                System.err.println("Identified as return obj: "+sobj);
+                //System.err.println("Identified as return obj: "+sobj);
                 SetComponent(component, Escape.getInstance());
                 return;
             }
             if (isEscapingObject(sobj)) {
-                System.err.println("Identified as escaping obj: "+sobj);
+                //System.err.println("Identified as escaping obj: "+sobj);
                 SetComponent(component, Escape.getInstance());
                 return;
             }
@@ -664,7 +664,7 @@ public class ReworkedResolver{
             if (StoreEscape.MarkParamReturnEscaping == false)
                 if (sobj.getObject().type == ObjectType.parameter) {
                     if (isEscapingParam(sobj)) {
-                        System.err.println("Identified as escaping param: "+sobj);
+                        //System.err.println("Identified as escaping param: "+sobj);
                         SetComponent(component, Escape.getInstance());
                         return;
                     }
@@ -682,11 +682,11 @@ public class ReworkedResolver{
                 try {
                     if (StoreEscape.MarkParamReturnEscaping == false)
                         if (isReturnedFromDifferentFunction(sobj, nxt) ) {
-                            System.err.println("Returned from different func: "+ sobj);
+                            //System.err.println("Returned from different func: "+ sobj);
                             continue;
                         }
                     if (isEscapingObject(nxt)) {
-                        System.err.println("Escaping obj: "+nxt);
+                        //System.err.println("Escaping obj: "+nxt);
                         SetComponent(component, Escape.getInstance());
                         return;
                     }
@@ -703,7 +703,7 @@ public class ReworkedResolver{
     }
 
     void SetComponent ( List<StandardObject> comp, EscapeState es) {
-        System.err.println("comp:"+comp+" : "+es);
+        //System.err.println("comp:"+comp+" : "+es);
         for (StandardObject s: comp) {
             if (this.solvedSummaries.get(s.getMethod()) != null)
                 this.solvedSummaries.get(s.getMethod()).put(s.getObject(), new EscapeStatus(es));
