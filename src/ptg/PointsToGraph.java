@@ -205,9 +205,9 @@ public class PointsToGraph {
 	public void union(PointsToGraph other) {
 		for (Map.Entry<Local, Set<ObjectNode>> entry : other.vars.entrySet()) {
 			if (vars.containsKey(entry.getKey()) && entry.getValue() != null) {
-				if (!vars.get(entry.getKey()).equals(entry.getValue())) {
+				//if (!vars.get(entry.getKey()).equals(entry.getValue())) {
 					vars.get(entry.getKey()).addAll(entry.getValue());
-				}
+				//}
 			} else {
 				if (entry.getValue() != null)
 					vars.put(entry.getKey(), new HashSet<>(entry.getValue()));
@@ -362,7 +362,11 @@ public class PointsToGraph {
 		Set<ObjectNode> s = new HashSet<>();
 		s.addAll(vars.get(l));
 		// TODO: Incorrect. Rectify this.
-		vars.put(RetLocal.getInstance(), s);
+		//vars.put(RetLocal.getInstance(), s);
+		if(!vars.containsKey(RetLocal.getInstance())) {
+			vars.put(RetLocal.getInstance(), new HashSet<>());
+		}
+		vars.get(RetLocal.getInstance()).addAll(s);
 		ConditionalValue ret = ConditionalValue.getRetCV(m);
 		cascadeCV(l, ret, summary);
 	}
