@@ -222,7 +222,7 @@ public class GetSootArgs {
 				"-output-dir", args[4],
 				"-output-format", "jimple",
 				"-x", "jdk.*",
-				//"-x", "java.*",
+				"-x", "java.*",
 				"-x", "org.*",
 				"-x", "com.*",
 				"-x", "sun.*",

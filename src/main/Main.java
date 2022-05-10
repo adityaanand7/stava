@@ -195,7 +195,7 @@ public class Main {
 			f.close();
 		}
 		catch( Exception e) {
-			System.err.println(e);
+			System.err.println("WHILE PRINTING CFG: Exception occured " + e);
 		}
 	}
 
@@ -234,7 +234,7 @@ public class Main {
             f.close();
         }
         catch(Exception e) {
-            System.err.println(e);
+            System.err.println("WHILE PRINTING SUMMARY EXCEPTION HAPPENED: "+ e);
         }
     }
 

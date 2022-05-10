@@ -203,8 +203,7 @@ public class ReworkedResolver{
                                 }
                         }
 
-                    }
-                    else {
+                    } else {
                         newStates.add(state);
                         if(state instanceof Escape) {
                             this.solvedSummaries.get(key).put(obj, new EscapeStatus(Escape.getInstance()));
@@ -319,7 +318,7 @@ public class ReworkedResolver{
                                 }
                             } catch(Exception e) {
                                 // System.err.println(cstate.method+" "+cstate.object);
-                                // System.err.println(e);
+                                System.err.println("In GenerateGraphFromSummary : "+e);
                                 continue;
                             }
                         }
@@ -422,7 +421,7 @@ public class ReworkedResolver{
             }
         }
         catch(Exception e) {
-            System.err.println(e);
+            System.err.println("In match Obj: "+e);
             System.out.println(obj1+" "+obj2);
         }
         
