@@ -3,6 +3,7 @@ package main;
 import analyser.StaticAnalyser;
 import config.StoreEscape;
 import es.*;
+import ptg.MethodsForObject;
 import ptg.ObjectNode;
 import ptg.PointsToGraph;
 import resolver.ContextualResolver;
@@ -142,6 +143,8 @@ public class Main {
 
 			printAllInfo(StaticAnalyser.ptgs, resolved, args[4]);
 
+			//printContextualInfo(StaticAnalyser.ptgs, cr.contextualsummaries, args[4]);
+
 			saveStats(cr.existingSummaries, resolved, args[4], staticAnalyser.ptgs);
 
 			printResForJVM(cr.solvedSummaries, args[2], args[4]);
@@ -154,16 +157,16 @@ public class Main {
 			System.out.println("Resolution is done");
 			System.out.println("Time Taken in phase 1:"+(analysis_end-analysis_start)/1000F);
 			System.out.println("Time Taken in phase 2:"+(res_end-res_start)/1000F);
-	
+
 			// System.out.println(staticAnalyser.summaries.size()+ " "+staticAnalyser.ptgs.size());
-			
-			
+
+
 			HashMap<SootMethod, HashMap<ObjectNode, EscapeStatus>> resolved = (HashMap) kill(sr.solvedSummaries);
-			
+
 			printAllInfo(StaticAnalyser.ptgs, resolved, args[4]);
-	
+
 			saveStats(sr.existingSummaries, resolved, args[4], staticAnalyser.ptgs);
-	
+
 			printResForJVM(sr.solvedSummaries, args[2], args[4]);
 		}
 		else {
@@ -172,17 +175,17 @@ public class Main {
 			long res_end = System.currentTimeMillis();
 			System.out.println("Resolution is done");
 			System.out.println("Time Taken:"+(res_end-res_start)/1000F);
-	
+
 			// System.out.println(staticAnalyser.summaries.size()+ " "+staticAnalyser.ptgs.size());
-			
-			
+
+
 			HashMap<SootMethod, HashMap<ObjectNode, EscapeStatus>> resolved = (HashMap) kill(sr.solvedSummaries);
 			printAllInfo(StaticAnalyser.ptgs, staticAnalyser.summaries, args[4]);
-			
+
 			printAllInfo(StaticAnalyser.ptgs, resolved, args[4]);
-	
+
 			saveStats(sr.existingSummaries, resolved, args[4], staticAnalyser.ptgs);
-	
+
 			printResForJVM(sr.solvedSummaries, args[2], args[4]);
 		}
 	}
@@ -240,6 +243,33 @@ public class Main {
 
 	private static void printAllInfo(Map<SootMethod, PointsToGraph> ptgs,
 									 Map<SootMethod, HashMap<ObjectNode, EscapeStatus>> summaries, String opDir) {
+
+		Path p_opDir = Paths.get(opDir);
+		for (Map.Entry<SootMethod, PointsToGraph> entry : ptgs.entrySet()) {
+			SootMethod method = entry.getKey();
+			PointsToGraph ptg = entry.getValue();
+			Path p_opFile = Paths.get(p_opDir.toString() + "/" + method.getDeclaringClass().toString() + ".info");
+//			System.out.println("Method "+method.toString()+" appends to "+p_opFile);
+			StringBuilder output = new StringBuilder();
+			output.append(method.toString() + "\n");
+			output.append("PTG:\n");
+			output.append(ptg.toString());
+			output.append("\nSummary\n");
+			output.append(summaries.get(method).toString() + "\n");
+			output.append("**************************************** \n");
+			try {
+				Files.write(p_opFile, output.toString().getBytes(StandardCharsets.UTF_8),
+						Files.exists(p_opFile) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE);
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("Unable to write info of " + method.toString() + " to file " + p_opFile.toString());
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void printContextualInfo(Map<SootMethod, PointsToGraph> ptgs,
+											Map<SootMethod, Map<MethodsForObject, Map<ObjectNode, EscapeStatus>>> summaries, String opDir) {
 
 		Path p_opDir = Paths.get(opDir);
 		for (Map.Entry<SootMethod, PointsToGraph> entry : ptgs.entrySet()) {

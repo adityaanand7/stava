@@ -1,6 +1,7 @@
 package utils;
 
 import es.EscapeStatus;
+import ptg.MethodsForObject;
 import ptg.ObjectNode;
 import soot.SootMethod;
 
